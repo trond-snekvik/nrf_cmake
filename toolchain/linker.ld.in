@@ -1,0 +1,13 @@
+/* Linker script to configure memory regions for ${DEVICE}_${CHIP_CONFIG} ${SOFTDEVICE}. */
+
+SEARCH_DIR(.)
+GROUP(-lgcc -lc -lnosys)
+
+MEMORY
+{
+  FLASH (rx) : ORIGIN = ${FLASH_START}, LENGTH = ${FLASH_SIZE}
+  RAM (rwx) :  ORIGIN = ${RAM_START}, LENGTH = ${RAM_SIZE}
+}
+
+
+INCLUDE "nrf_common.ld"
