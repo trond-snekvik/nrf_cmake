@@ -3,9 +3,29 @@ set(PWD ${CMAKE_CURRENT_LIST_DIR})
 include("${PWD}/device.cmake")
 include("${PWD}/softdevice.cmake")
 
+# Find SDK
 find_path(SDK_ROOT
     "components/sdk_validation.h"
-    HINTS "../nRF5_SDK_15.0.0_a53641a" "../../nRF5_SDK_15.0.0_a53641a")
+    HINTS
+        "../nRF5_SDK_15.0.0_a53641a"
+        "../../nRF5_SDK_15.0.0_a53641a"
+        "../nRF5_SDK_15.2.0_9412b96"
+        "../../nRF5_SDK_15.2.0_9412b96"
+        ENV "SDK_ROOT" "SDK15_ROOT"
+    PATH_SUFFIXES "components" "modules/nrfx"
+    DOC "nRF5 SDK Directory")
+
+if (EXISTS ${SDK_ROOT})
+    message(STATUS "SDK_ROOT: ${SDK_ROOT}")
+else()
+    message(FATAL_ERROR
+            "nRF5 SDK 15 not found. Download it from http://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x "
+            "and pass it to CMake with -DSDK_ROOT=<SDK dir> or add the environment variable SDK_ROOT=<SDK dir>.\n")
+endif()
+
+# Derived paths
+set(NRFX_ROOT "${SDK_ROOT}/modules/nrfx")
+set(MDK_ROOT "${SDK_ROOT}/modules/nrfx/mdk")
 
 # Configuration options
 set(DEVICE "nrf52832" CACHE STRING "Device to compile for")
@@ -35,7 +55,8 @@ set(CMAKE_TOOLCHAIN_FILE "${PWD}/toolchain/gcc.cmake")
 
 include_directories(
     "${SDK_ROOT}/components/toolchain/cmsis/include"
-    "${SDK_ROOT}/components/libraries")
+    "${SDK_ROOT}/components/libraries"
+    "${MDK_ROOT}")
 link_libraries("-T${LINKER_SCRIPT}")
 
 # Overwrite add_executable to create hex-file, map-file and include system-sources
