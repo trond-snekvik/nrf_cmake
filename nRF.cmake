@@ -73,6 +73,12 @@ function(add_executable name)
     add_custom_command(
         TARGET ${name}
         POST_BUILD
+        COMMAND arm-none-eabi-size ${CMAKE_CURRENT_BINARY_DIR}/${name}_${CONFIGURATION}.elf
+        )
+
+    add_custom_command(
+        TARGET ${name}
+        POST_BUILD
         COMMAND arm-none-eabi-objcopy -O ihex ${CMAKE_CURRENT_BINARY_DIR}/${name}_${CONFIGURATION}.elf ${CMAKE_CURRENT_BINARY_DIR}/${name}_${CONFIGURATION}.hex
         )
 endfunction(add_executable)
