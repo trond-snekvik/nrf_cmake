@@ -8,6 +8,7 @@ set(CMAKE_ASM_COMPILER arm-none-eabi-gcc)
 
 string(REPLACE ";" " " COMPILE_FLAGS "${COMPILE_FLAGS_${DEVICE}}")
 string(REPLACE ";" " " LINK_FLAGS "${LINK_FLAGS_${DEVICE}}")
+message(STATUS "Device: ${DEVICE}")
 
 set(CMAKE_C_FLAGS_INIT ${COMPILE_FLAGS})
 set(CMAKE_CXX_FLAGS_INIT ${COMPILE_FLAGS})

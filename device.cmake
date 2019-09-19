@@ -76,8 +76,8 @@ set(COMPILE_FLAGS_nrf52840
     "-mfloat-abi=hard"
     "-mfpu=fpv4-sp-d16"
     "-mabi=aapcs"
-    "-DNRF52"
-    "-DNRF52840")
+    "-DNRF52840"
+    "-DNRF52840_XXAA")
 
 # Linker flags
 set(LINK_FLAGS_COMMON
@@ -166,4 +166,10 @@ set(C_FLAGS_nrf51
 set(C_FLAGS_nrf52832
     "NRF52"
     "NRF52832"
+    )
+
+set(C_FLAGS_nrf52840
+    "NRF52"
+    "NRF52840"
+    "NRF52840_XXAA"
     )
